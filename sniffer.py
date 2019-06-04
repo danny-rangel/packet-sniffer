@@ -23,3 +23,19 @@ def ethernet_frame(data):
 def get_mac_address(bytes_address):
     bytes_str = map('{:02x}'.format, bytes_address)
     return ':'.join(bytes_str).upper()
+
+
+# function that unpacks the IPv4 packet
+def ipv4_packet(data):
+    version_header_len = data[0]
+    version = version_header_len >> 4
+    header_len = (version_header_len & 15) * 4
+    ttl, protocol, src, target = struct.unpack('! 8x B B 2x 4s 4s', data[:20])
+    return version, header_len, ttl, protocol, ipv4(src), ipv4(target), data[header_len:]
+
+
+# function that returns formatted IPv4 address
+def ipv4(address):
+    return '.'.join(map(str, address))
+
+main()
