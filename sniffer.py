@@ -13,6 +13,18 @@ def main():
         print('\nEthernet Frame:')
         print('Destination: {}, Source: {}, Protocol: {}'.format(dest_mac, src_mac, ethernet_proto))
 
+        if ethernet_proto == 8:
+            (version, header_len, ttl, proto, src, target, data) = ipv4_packet(data)
+            print('\tIPv4 Packet:')
+            print('\t\tVersion: {}, Header Length: {}, TTL: {}'.format(version, header_len, ttl))
+            print('\t\tProtocol: {}, Source: {}, Target: {}'.format(proto, src, target))
+
+            if proto == 1:
+                icmp_type, code, checksum, data = icmp_packet(data)
+                print('\tICMP Packet:')
+                print('\t\tType: {}, Code: {}, Checksum: {}'.format(icmp_type, code, checksum))
+                print(format_lines('\t\t\t', data))
+
 
 # function for unpacking the ethernet frame
 def ethernet_frame(data):
