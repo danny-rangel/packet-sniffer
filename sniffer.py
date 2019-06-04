@@ -25,6 +25,30 @@ def main():
                 print('\t\tType: {}, Code: {}, Checksum: {}'.format(icmp_type, code, checksum))
                 print(format_lines('\t\t\t', data))
 
+            elif proto == 6:
+                src_port, dest_port, sequence, acknowledgement, flag_urg, flag_ack, flag_psh, flag_rst, flag_syn, flag_fin, data = tcp_segment(data)
+                print('\tTCP Segment:')
+                print('\t\tSource Port: {}, Destination Port: {}'.format(src_port, dest_port))
+                print('\t\tSequence: {}, Acknowledgement: {}'.format(sequence, acknowledgement))
+                print('\t\tFlags:')
+                print('\t\t\tURG: {}, ACK: {}, PSH: {}, RST: {}, SYN: {}, FIN: {}'.format(flag_urg, flag_ack, flag_psh, flag_rst, flag_syn, flag_fin))
+                print('\t\tData:')
+                print(format_lines('\t\t\t', data))
+            
+            elif proto == 17:
+                src_port, dest_port, length, data = udp_segment(data)
+                print('\tUDP Segment:')
+                print('\t\tSource Port: {}, Destination Port: {}, Length: {}'.format(src_port, dest_port, length))
+
+            else:
+                print('\tData:')
+                print(format_lines('\t\t', data))
+            
+        else:
+            print('\tData:')
+            print(format_lines('\t\t', data))
+
+
 
 # function for unpacking the ethernet frame
 def ethernet_frame(data):
