@@ -19,7 +19,7 @@ def format_mac_address(address):
     mac_address = ':'.join(bytes_string)
 
     # capitalize all the letters
-    mac_address.upper()
+    mac_address = mac_address.upper()
 
     # return the formatted mac address
     return mac_address
